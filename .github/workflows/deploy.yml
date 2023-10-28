@@ -36,12 +36,13 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: docker_nodejs_demo
-        IMAGE_TAG: ${{ github.run_number }}
+      
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{env.SHORT_SHA}} .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{env.SHORT_SHA}}
+        
     - name: Delete old images
       uses: LeiaInc/devops-delete-old-aws-ecr-images@v1
       with:
