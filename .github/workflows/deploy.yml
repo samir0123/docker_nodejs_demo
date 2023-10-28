@@ -8,9 +8,6 @@ on:
   push:
     branches: [ master ]
 
-  pull_request:
-    branches: [ master ]
-
 jobs:
   
   build:
@@ -41,13 +38,10 @@ jobs:
         ECR_REPOSITORY: docker_nodejs_demo
         IMAGE_TAG: ${{ github.run_number }}
       run: |
-  
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.run_number}} .
-        
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY}}:latest
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.run_number}}
-        
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
     - name: Delete old images
       uses: LeiaInc/devops-delete-old-aws-ecr-images@v1
       with:
