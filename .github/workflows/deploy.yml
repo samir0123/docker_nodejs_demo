@@ -40,3 +40,9 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+    - name: Delete old images
+      uses: LeiaInc/devops-delete-old-aws-ecr-images@v1
+      with:
+        repo-name: docker_nodejs_demo
+        qtd-images: 3
