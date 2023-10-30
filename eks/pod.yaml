@@ -1,1 +1,10 @@
-##Hello
+apiVersion: v1
+kind: Pod
+metadata:
+  name: docker-nodejs-pod
+spec:
+  containers:
+  - name: docker-nodejs-pod
+    image: 979578978884.dkr.ecr.us-east-2.amazonaws.com/docker_nodejs_demo:latest
+    ports:
+    - containerPort: 3000
