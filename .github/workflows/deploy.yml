@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Deploy to ECR
+name: Deploy to EKS
 
 # Controls when the workflow will run
 on:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   
-  build:
+  deploy:
     
     name: Build Image
     runs-on: ubuntu-latest
@@ -20,6 +20,12 @@ jobs:
 
     - name: Check out code
       uses: actions/checkout@v2
+
+    - name: Install Kubecontrol
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'v1.28.3'
+      id: install
     
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -38,11 +44,12 @@ jobs:
         ECR_REPOSITORY: docker_nodejs_demo
         IMAGE_TAG: ${{ github.run_number }}
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t latest .
+        docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
         
-    - name: Delete old images
-      uses: LeiaInc/devops-delete-old-aws-ecr-images@v1
-      with:
-        repo-name: docker_nodejs_demo
-        qtd-images: 3
+    - name: Deploy image to amazon EKS
+      run: |
+        kubectl apply -f eks/aws-auth.yaml
+        kubectl apply -f eks/deployment.yaml
+        kubectl apply -f eks/service.yaml
+
