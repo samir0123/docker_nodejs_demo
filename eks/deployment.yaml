@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: docker_nodejs_deployment
+  name: docker-nodejs-deployment
   labels:
     app: nodejs
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: nodejs
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: nodejs
-        image: 979578978884.dkr.ecr.us-east-2.amazonaws.com/docker_nodejs_demo:22
+        image: 979578978884.dkr.ecr.us-east-2.amazonaws.com/docker_nodejs_demo:latest
         ports:
         - containerPort: 3000

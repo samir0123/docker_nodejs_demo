@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: docker-nodejs-ingress
+spec:
+  rules:
+  - host: "aac73de8550e044d7aed26aedad5e97b-1564371915.us-east-2.elb.amazonaws.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service: 
+            name: docker-nodejs-service
+            port:
+              number: 80
