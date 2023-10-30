@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         app: nodejs
+        ### Comment added 
     spec:
       containers:
       - name: nodejs
