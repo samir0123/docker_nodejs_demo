@@ -22,7 +22,7 @@ jobs:
     steps:
 
     - name: Check out code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Install Kubecontrol
       uses: azure/setup-kubectl@v3
@@ -55,7 +55,8 @@ jobs:
         
     - name: Deploy image to amazon EKS
       run: |
-        kubectl apply -f eks/aws-auth.yaml
-        kubectl apply -f eks/deployment.yaml
-        kubectl apply -f eks/service.yaml
+        kubectl apply -f /home/samir/Desktop/projects/docker_nodejs_demo/eks/aws-auth.yaml
+        kubectl apply -f /home/samir/Desktop/projects/docker_nodejs_demo/eks/deployment.yaml
+        kubectl apply -f /home/samir/Desktop/projects/docker_nodejs_demo/eks/service.yaml
+
 
