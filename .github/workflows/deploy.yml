@@ -15,7 +15,7 @@ jobs:
   
   deploy:
     
-    name: Build Image
+    name: Build Image , push to ECR and appl
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -54,7 +54,7 @@ jobs:
       run: aws eks update-kubeconfig --name docker_nodejs_demo --region us-east-2
         
     - name: Deploy image to amazon EKS
-      run: kubectl set image deployment/docker-nodejs-deployment 979578978884.dkr.ecr.us-east-2.amazonaws.com/docker_nodejs_demo=979578978884.dkr.ecr.us-east-2.amazonaws.com/docker_nodejs_demo:latest
+      run: kubectl run testapp --image=nginx:latest
 
         
 
