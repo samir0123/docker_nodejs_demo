@@ -54,9 +54,8 @@ jobs:
       run: aws eks update-kubeconfig --name docker_nodejs_demo --region us-east-2
         
     - name: Deploy image to amazon EKS
-      run: |
-        kubectl apply -f /home/samir/Desktop/projects/docker_nodejs_demo/eks/aws-auth.yaml
-        kubectl apply -f /home/samir/Desktop/projects/docker_nodejs_demo/eks/deployment.yaml
-        kubectl apply -f /home/samir/Desktop/projects/docker_nodejs_demo/eks/service.yaml
+      run: kubectl set image deployment/docker-nodejs-deployment 979578978884.dkr.ecr.us-east-2.amazonaws.com/docker_nodejs_demo=979578978884.dkr.ecr.us-east-2.amazonaws.com/docker_nodejs_demo:latest
+
+        
 
 
